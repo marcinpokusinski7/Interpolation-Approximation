@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 from scipy.optimize import curve_fit
+
 from Errors import Errors
 
 
@@ -26,11 +27,9 @@ class Approximation:
         plt.plot(xdata, ydata, 'o', label='data')
         plt.plot(xdata, fit_y, '-', label='fit')
 
-        Errors.errors(xdata,fit_y)
+        Errors.errors(z, y)
 
         plt.savefig("line.jpg")
         open('line.jpg')
         plt.legend()
         plt.show()
-
-
