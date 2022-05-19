@@ -37,7 +37,7 @@ def Menu(status):
 
 def approximationMethod():
     mainArray = []
-    n = int(input("Wprowadz ilość par wsółrzędnych punktów : "))
+    n = int(input("Wprowadz ilość par współrzędnych punktów : "))
     for i in range(n):
         res = list(map(int, input("\nPodaj współrzędne punktów " + (i + 1).__str__() + " : ").strip().split()))[:n]
         mainArray.append(res)
