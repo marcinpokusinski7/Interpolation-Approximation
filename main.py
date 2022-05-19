@@ -39,7 +39,8 @@ def approximationMethod():
     mainArray = []
     n = int(input("Wprowadz ilość par współrzędnych punktów : "))
     for i in range(n):
-        res = list(map(int, input("\nPodaj współrzędne punktów " + (i + 1).__str__() + " : ").strip().split()))[:n]
+        res = list(map(float, input("\nPodaj współrzędne punktów " + (i + 1).__str__() + " : ").strip().split()))[:n]
+        print(res)
         mainArray.append(res)
 
     splittedArrayOfPoints = np.array(mainArray)
@@ -62,9 +63,10 @@ def approximationMethod():
 
 def interpolation():
     mainArray = []
-    n = int(input("Wprowadz ilość par wsółrzędnych punktów : "))
+    n = int(input("Wprowadz ilość par współrzędnych punktów : "))
     for i in range(n):
-        res = list(map(int, input("\nPodaj współrzędne punktów " + (i + 1).__str__() + " : ").strip().split()))[:n]
+        res = list(map(float, input("\nPodaj współrzędne punktów " + (i + 1).__str__() + " : ").strip().split()))[:n]
+        print(res)
         mainArray.append(res)
 
     z = int(input("Wielomian stopnia : "))
@@ -101,5 +103,3 @@ while True:
         print("Nie ma takiej opcji, wybierz ponownie: ")
     else:
         break
-
-
