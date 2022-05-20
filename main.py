@@ -68,8 +68,6 @@ def interpolation():
         print(res)
         mainArray.append(res)
 
-    z = int(input("Wielomian stopnia : "))
-
     splittedArrayOfPoints = np.array(mainArray)
     print(mainArray)
     x = splittedArrayOfPoints[:, 0]

@@ -24,19 +24,12 @@ class Interpolation:
         new_y = np.poly1d(L)
         print("Wielomian :" + str(new_y))
         #  plot the polynomial
-        X = np.linspace(0, 14, 100)
+        Errors.errors(x, y)
+        X = np.linspace(x[0], x[-1])
+
+        # Preparing a plot with values from polyval
         plt.plot(X, np.polyval(L, X))
         plt.savefig("line.jpg")
         plt.grid(True)
         img = Image.open('line.jpg')
         img.show()
-        Errors.errors(x, y)
-
-         #new_x = np.linspace(x[0], x[-1])
-         #new_y = poly(new_x)
-
-        # plt.plot(x, y, "o", new_x, new_y)
-        # plt.xlim([x[0] - 1, x[-1] + 1])
-        #
-        #
-        # plt.show()
