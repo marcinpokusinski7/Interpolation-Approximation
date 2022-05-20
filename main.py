@@ -76,7 +76,7 @@ def interpolation():
     print("Punkty x :" + str(x))
     y = splittedArrayOfPoints[:, 1]
     print("Punkty y :" + str(y))
-    Interpolation.Interpolation.interpolationMethod(x, y, z)
+    Interpolation.Interpolation.interpolationMethod(x, y)
 
     while True:
         try:
