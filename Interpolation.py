@@ -1,11 +1,7 @@
-from scipy.interpolate import lagrange
+from PIL import Image
+import sklearn.neighbors
 import numpy as np
 import matplotlib.pyplot as plt
-from numpy.polynomial.polynomial import Polynomial
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import max_error
-
 from Errors import Errors
 
 
@@ -24,5 +20,6 @@ class Interpolation:
         plt.plot(x, y, "o", new_x, new_y)
         plt.xlim([x[0] - 1, x[-1] + 1])
         plt.savefig("line.jpg")
-        open('line.jpg')
+        img = Image.open('line.jpg')
+        img.show()
         plt.show()

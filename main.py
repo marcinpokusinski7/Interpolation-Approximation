@@ -1,11 +1,11 @@
-from sklearn.metrics import mean_squared_error, mean_absolute_error
-
+import sklearn.neighbors
+import warnings
 import Interpolation
 import numpy as np
 
 import Approximation
 
-
+warnings.filterwarnings('ignore')
 def printMenu():
     print("Menu")
     print(" Wcisnij 1 - Interpolacja \n"
@@ -30,8 +30,7 @@ def Menu(status):
     if status == 3:
         return printMenu()
     if status == 4:
-        exit()
-    else:
+        quit()
         return "Błąd"
 
 
