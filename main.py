@@ -42,13 +42,14 @@ def approximationMethod():
         print(res)
         mainArray.append(res)
 
+    z = int(input("Wielomian stopnia : "))
     splittedArrayOfPoints = np.array(mainArray)
     print(mainArray)
     x = splittedArrayOfPoints[:, 0]
     print("Punkty x :" + str(x))
     y = splittedArrayOfPoints[:, 1]
     print("Punkty y :" + str(y))
-    Approximation.Approximation.approximationMethod(x, y)
+    Approximation.Approximation.approximationMethod(x, y, z)
 
     while True:
         try:

@@ -2,14 +2,15 @@ import sklearn.neighbors
 from PIL import Image
 from matplotlib import pyplot as plt
 import numpy as np
+from scipy.interpolate import lagrange
 from scipy.optimize import curve_fit
-
+from numpy.polynomial import Polynomial
 from Errors import Errors
 
 
 class Approximation:
     @classmethod
-    def approximationMethod(self, z, y):
+    def approximationMethod(self, z, y, c):
         # gauss method
         xdata = np.asarray(z)
         ydata = np.asarray(y)
@@ -30,13 +31,14 @@ class Approximation:
         plt.plot(xdata, ydata, 'o', label='data')
         plt.plot(xdata, fit_y, '-', label='fit')
 
-        polynomialCalculated = np.polyfit(xdata, fit_y, 2)
-        poly = np.poly1d(polynomialCalculated)
-        print(poly)
+        LagrangeCalculated = lagrange(z, y)
+        L = Polynomial(LagrangeCalculated).coef
+        print("Wielomian: " + str(L))
 
-        Errors.errors(xdata, fit_y)
+        Errors.errors(xdata, ydata)
         plt.savefig("line.jpg")
+        plt.legend()
         img = Image.open('line.jpg')
         img.show()
-        plt.legend()
-        plt.show()
+
+

@@ -11,10 +11,6 @@ from Errors import Errors
 class Interpolation:
     @classmethod
     def interpolationMethod(self, x, y):
-        # polynomialCalculated = np.polyfit(x, y, z)
-        # poly = np.poly1d(polynomialCalculated)
-        # print("------ Wielomian : ------\n" + str(poly))  # Generate and plot the points
-
         plt.plot(x, y, 'o')
 
         #  Calculate the polynomial coefficients
