@@ -11,8 +11,7 @@ warnings.filterwarnings('ignore')
 def chooseReading():
     print("Wybierz w jaki sposób chcesz dostarczy punkty do programu \n"
           "\r1 - Excel \n"
-          "\r2 - Konsola \n"
-          "\r5 - Zakończ ")
+          "\r2 - Konsola \n")
 
     while True:
         try:
@@ -20,25 +19,25 @@ def chooseReading():
             if choose == 1:
                 return excelRead()
             if choose == 2:
-                return printMenu()
-            if choose == 5:
-                quit()
-                return "Błąd"
+                return console()
         except ValueError:
             print("Nie ma takiej opcji, wybierz ponownie: ")
             print("Wybierz w jaki sposób chcesz dostarczy punkty do programu \n"
                   "\r1 - Excel \n"
-                  "\r2 - Konsola \n"
-                  "\r5 - Zakończ ")
-            chooseReading()
+                  "\r2 - Konsola \n")
         else:
             break
 
 
 def excelRead():
+    print("Aby pobrac punkty z Excela współrzędne X proszę podać w pierwszej linii odzielone spacją.\n"
+          "Punkty Y proszę podać w kolejnej linii")
     Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
     filename = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
-    print(filename)
+    print("Opening : " + str(filename))
+    with open(filename) as file:
+        lines = file.readlines()
+        print(lines)
 
     printMenu()
 
@@ -48,7 +47,6 @@ def printMenu():
     print(" Wcisnij 1 - Interpolacja \n"
           " Wcisnij 2 - Aproksymacja \n"
           " Wcisnij 3 - Aby wyświetlić ponownie \n"
-          " Wcisnij 4 - Wróć do wyboru excel/konsola\n"
           " Wcisnij 5 - Zakończ ")
     while True:
         try:
@@ -80,19 +78,7 @@ def menu(status):
 
 
 def approximationMethod():
-    mainArray = []
-    n = int(input("Wprowadz ilość par współrzędnych punktów : "))
-    for i in range(n):
-        res = list(map(float, input("\nPodaj współrzędne punktów " + (i + 1).__str__() + " : ").strip().split()))[:n]
-        print(res)
-        mainArray.append(res)
-
-    splittedArrayOfPoints = np.array(mainArray)
-    print(mainArray)
-    x = splittedArrayOfPoints[:, 0]
-    print("Punkty x :" + str(x))
-    y = splittedArrayOfPoints[:, 1]
-    print("Punkty y :" + str(y))
+    x, y = chooseReading()
     Approximation.Approximation.approximationMethod(x, y)
 
     while True:
@@ -103,6 +89,22 @@ def approximationMethod():
             print("Nie ma takiej opcji, wybierz ponownie: ")
         else:
             break
+
+
+def console():
+    mainArray = []
+    n = int(input("Wprowadz ilość par współrzędnych punktów : "))
+    for i in range(n):
+        res = list(map(float, input("\nPodaj współrzędne punktów " + (i + 1).__str__() + " : ").strip().split()))[:n]
+        print(res)
+        mainArray.append(res)
+    splittedArrayOfPoints = np.array(mainArray)
+    print(mainArray)
+    x = splittedArrayOfPoints[:, 0]
+    print("Punkty x :" + str(x))
+    y = splittedArrayOfPoints[:, 1]
+    print("Punkty y :" + str(y))
+    return x, y
 
 
 def interpolation():
@@ -131,7 +133,7 @@ def interpolation():
             break
 
 
-chooseReading()
+printMenu()
 
 while True:
     try:
