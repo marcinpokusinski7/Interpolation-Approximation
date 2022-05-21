@@ -10,8 +10,9 @@ from Errors import Errors
 
 class Approximation:
     @classmethod
-    def approximationMethod(self, z, y, c):
-        # gauss method
+    def approximationMethod(self, z, y):
+        # gauss method its normal distribution so it does not need deegre
+        # of polynomial.
         xdata = np.asarray(z)
         ydata = np.asarray(y)
         plt.plot(xdata, ydata, 'o')
