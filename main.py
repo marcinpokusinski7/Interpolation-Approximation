@@ -1,6 +1,11 @@
 import warnings
 from tkinter import *
 from tkinter.filedialog import askopenfilename
+
+import numpy
+from numpy import floor
+from numpy.lib.npyio import loadtxt
+
 import Interpolation
 import numpy as np
 import Approximation
@@ -9,8 +14,8 @@ warnings.filterwarnings('ignore')
 
 
 def chooseReading():
-    print("Wybierz w jaki sposób chcesz dostarczy punkty do programu \n"
-          "\r1 - Excel \n"
+    print("Wybierz w jaki sposób chcesz dostarczyc punkty do programu \n"
+          "\r1 - Plik \n"
           "\r2 - Konsola \n")
 
     while True:
@@ -21,9 +26,10 @@ def chooseReading():
             if choose == 2:
                 return console()
         except ValueError:
+            print("")
             print("Nie ma takiej opcji, wybierz ponownie: ")
-            print("Wybierz w jaki sposób chcesz dostarczy punkty do programu \n"
-                  "\r1 - Excel \n"
+            print("Wybierz w jaki sposób chcesz dostarczyc punkty do programu \n"
+                  "\r1 - Plik \n"
                   "\r2 - Konsola \n")
         else:
             break
@@ -31,15 +37,34 @@ def chooseReading():
 
 def excelRead():
     print("Aby pobrac punkty z Excela współrzędne X proszę podać w pierwszej linii odzielone spacją.\n"
-          "Punkty Y proszę podać w kolejnej linii")
-    Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
-    filename = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
+          "Punkty Y proszę podać w kolejnej linii\n"
+          "Jeżeli są to liczby zmiennoprzecinkowe proszę wstawić kropkę")
+    root = Tk()
+    root.attributes('-topmost', True)
+    root.withdraw()
+    filename = askopenfilename()
     print("Opening : " + str(filename))
     with open(filename) as file:
-        lines = file.readlines()
+        lines = loadtxt(file, dtype=str, comments="#", delimiter=",", unpack=False)
         print(lines)
+    newArray = []
+    newArray = np.array(np.split(lines, floor(len(lines))))
+    middleIndex = int(floor(len(newArray) / 2))
+    firstHalf = numpy.loadtxt(lines[:middleIndex])
+    secondHalf = numpy.loadtxt(lines[middleIndex:])
+    print(firstHalf)
+    print(secondHalf)
+    return firstHalf, secondHalf
 
-    printMenu()
+    while True:
+        try:
+            print("")
+            n = int(input("Wybierz z menu: "))
+            menu(n)
+        except ValueError:
+            print("Nie ma takiej opcji, wybierz ponownie: ")
+        else:
+            break
 
 
 def printMenu():
@@ -50,6 +75,7 @@ def printMenu():
           " Wcisnij 5 - Zakończ ")
     while True:
         try:
+            print("")
             n = int(input("Wybierz z menu: "))
             menu(n)
         except ValueError:
@@ -57,7 +83,6 @@ def printMenu():
             print(" Wcisnij 1 - Interpolacja \n"
                   " Wcisnij 2 - Aproksymacja \n"
                   " Wcisnij 3 - Aby wyświetlić ponownie \n"
-                  " Wcisnij 4 - Wróć do wyboru excel/konsola\n"
                   " Wcisnij 5 - Zakończ ")
         else:
             break
@@ -83,6 +108,7 @@ def approximationMethod():
 
     while True:
         try:
+            print("")
             n = int(input("Wybierz z menu: "))
             menu(n)
         except ValueError:
@@ -108,23 +134,12 @@ def console():
 
 
 def interpolation():
-    mainArray = []
-    n = int(input("Wprowadz ilość par współrzędnych punktów : "))
-    for i in range(n):
-        res = list(map(float, input("\nPodaj współrzędne punktów " + (i + 1).__str__() + " : ").strip().split()))[:n]
-        print(res)
-        mainArray.append(res)
-
-    splittedArrayOfPoints = np.array(mainArray)
-    print(mainArray)
-    x = splittedArrayOfPoints[:, 0]
-    print("Punkty x :" + str(x))
-    y = splittedArrayOfPoints[:, 1]
-    print("Punkty y :" + str(y))
+    x, y = chooseReading()
     Interpolation.Interpolation.interpolationMethod(x, y)
 
     while True:
         try:
+            print("")
             n = int(input("Wybierz z menu: "))
             menu(n)
         except ValueError:
@@ -133,15 +148,15 @@ def interpolation():
             break
 
 
-printMenu()
+print("Menu")
+print(" Wcisnij 1 - Interpolacja \n"
+      " Wcisnij 2 - Aproksymacja \n"
+      " Wcisnij 3 - Aby wyświetlić ponownie \n"
+      " Wcisnij 5 - Zakończ ")
 
 while True:
     try:
-        print(" Wcisnij 1 - Interpolacja \n"
-              " Wcisnij 2 - Aproksymacja \n"
-              " Wcisnij 3 - Aby wyświetlić ponownie \n"
-              " Wcisnij 4 - Wróć do wyboru excel/konsola\n"
-              " Wcisnij 5 - Zakończ ")
+        print("")
         n = int(input("Wybierz z menu: "))
         menu(n)
     except ValueError:

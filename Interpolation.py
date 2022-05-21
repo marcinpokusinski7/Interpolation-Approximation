@@ -18,7 +18,9 @@ class Interpolation:
         L = Polynomial(LagrangeCalculated).coef
         print("Współczynniki wielomianu: " + str(L))
         new_y = np.poly1d(L)
-        print("Wielomian :" + str(new_y))
+        print("------- Wielomian : -------\n"
+              "\n"
+              "" + str(new_y))
         #  plot the polynomial
         Errors.errors(x, y)
         X = np.linspace(x[0], x[-1])
