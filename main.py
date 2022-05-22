@@ -64,6 +64,9 @@ def excelRead():
             menu(n)
         except ValueError:
             print("Nie ma takiej opcji, wybierz ponownie: ")
+        except IndexError as error:
+            print("Niepoprawnie wpisane dane, spróbuj ponownie: ")
+            printMenu()
         else:
             break
 
@@ -80,6 +83,7 @@ def txtRead():
     with open(filename) as file:
         lines = loadtxt(file, dtype=str, comments="#", delimiter=",", unpack=False)
         print(lines)
+
     newArray = []
     newArray = np.array(np.split(lines, floor(len(lines))))
     middleIndex = int(floor(len(newArray) / 2))
@@ -96,6 +100,9 @@ def txtRead():
             menu(n)
         except ValueError:
             print("Nie ma takiej opcji, wybierz ponownie: ")
+        except IndexError as error:
+            print("Niepoprawnie wpisane dane, spróbuj ponownie: ")
+            printMenu()
         else:
             break
 
@@ -159,11 +166,15 @@ def console():
         mainArray.append(res)
     splittedArrayOfPoints = np.array(mainArray)
     print(mainArray)
-    x = splittedArrayOfPoints[:, 0]
-    print("Punkty x :" + str(x))
-    y = splittedArrayOfPoints[:, 1]
-    print("Punkty y :" + str(y))
-    return x, y
+    try:
+        x = splittedArrayOfPoints[:, 0]
+        print("Punkty x :" + str(x))
+        y = splittedArrayOfPoints[:, 1]
+        print("Punkty y :" + str(y))
+        return x, y
+    except IndexError as error:
+        print("Niepoprawnie wpisane dane, spróbuj ponownie: ")
+        printMenu()
 
 
 def interpolation():
