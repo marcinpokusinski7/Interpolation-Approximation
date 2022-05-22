@@ -1,7 +1,7 @@
 import warnings
 from tkinter import *
 from tkinter.filedialog import askopenfilename
-
+import pandas as pd
 import numpy
 from numpy import floor
 from numpy.lib.npyio import loadtxt
@@ -15,29 +15,62 @@ warnings.filterwarnings('ignore')
 
 def chooseReading():
     print("Wybierz w jaki sposób chcesz dostarczyc punkty do programu \n"
-          "\r1 - Plik \n"
-          "\r2 - Konsola \n")
+          "\r1 - Plik txt \n"
+          "\r2 - Plik excel \n"
+          "\r3 - Konsola \n")
 
     while True:
         try:
             choose = int(input("Wybierz z menu: "))
             if choose == 1:
-                return excelRead()
+                return txtRead()
             if choose == 2:
+                return excelRead()
+            if choose == 3:
                 return console()
         except ValueError:
             print("")
             print("Nie ma takiej opcji, wybierz ponownie: ")
             print("Wybierz w jaki sposób chcesz dostarczyc punkty do programu \n"
-                  "\r1 - Plik \n"
-                  "\r2 - Konsola \n")
+                  "\r1 - Plik txt \n"
+                  "\r2 - Plik excel \n"
+                  "\r3 - Konsola \n")
         else:
             break
 
 
 def excelRead():
-    print("Aby pobrac punkty z Excela współrzędne X proszę podać w pierwszej linii odzielone spacją.\n"
-          "Punkty Y proszę podać w kolejnej linii\n"
+    print("Aby pobrac punkty z Excela współrzędne X proszę podać w pierwszej linii w każdej kolumnie odzielnie.\n"
+          "Punkty Y proszę podać w kolejnej linii w każdej kolumnie odzielnie\n"
+          "Jeżeli są to liczby zmiennoprzecinkowe proszę wstawić kropkę")
+    root = Tk()
+    root.attributes('-topmost', True)
+    root.withdraw()
+    filename = askopenfilename()
+    print("Opening : " + str(filename))
+    df = pd.read_excel(filename, header=None)
+    newArray = df.to_numpy()
+    middleIndex = int(floor(len(newArray) / 2))
+    x = newArray[:middleIndex]
+    y = newArray[middleIndex:]
+    print(x)
+    print(y)
+    return x[0, :], y[0, :]
+
+    while True:
+        try:
+            print("")
+            n = int(input("Wybierz z menu: "))
+            menu(n)
+        except ValueError:
+            print("Nie ma takiej opcji, wybierz ponownie: ")
+        else:
+            break
+
+
+def txtRead():
+    print("Aby pobrac punkty z pliku TXT współrzędne X proszę podać w pierwszej linii odzielone spacją.\n"
+          "Punkty Y proszę podać w kolejnej linii, również odzielone spacją\n"
           "Jeżeli są to liczby zmiennoprzecinkowe proszę wstawić kropkę")
     root = Tk()
     root.attributes('-topmost', True)
