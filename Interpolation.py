@@ -1,3 +1,5 @@
+import os
+
 from PIL import Image
 import sklearn.neighbors
 import numpy as np
@@ -11,6 +13,7 @@ from Errors import Errors
 class Interpolation:
     @classmethod
     def interpolationMethod(self, x, y):
+        os.remove("line.jpg")
         plt.plot(x, y, 'o')
 
         #  Calculate the polynomial coefficients

@@ -1,7 +1,10 @@
+import os
+
 import sklearn.neighbors
 from PIL import Image
 from matplotlib import pyplot as plt
 import numpy as np
+from numpy import poly1d
 from scipy.interpolate import lagrange
 from scipy.optimize import curve_fit
 from numpy.polynomial import Polynomial
@@ -13,6 +16,7 @@ class Approximation:
     def approximationMethod(self, z, y):
         # gauss method its normal distribution so it does not need deegre
         # of polynomial.
+        os.remove("line.jpg")
         xdata = np.asarray(z)
         ydata = np.asarray(y)
         plt.plot(xdata, ydata, 'o')
@@ -28,12 +32,13 @@ class Approximation:
         fit_B = parameters[1]
 
         fit_y = Gauss(xdata, fit_A, fit_B)
-        print(fit_y)
+        print("Współczynnik" + str(fit_y))
         plt.plot(xdata, ydata, 'o', label='data')
         plt.plot(xdata, fit_y, '-', label='fit')
 
         LagrangeCalculated = lagrange(z, y)
-        L = Polynomial(LagrangeCalculated).coef
+        L = poly1d(LagrangeCalculated)
+        print("")
         print("Wielomian: " + str(L))
 
         Errors.errors(xdata, ydata)

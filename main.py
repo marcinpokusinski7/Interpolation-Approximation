@@ -35,20 +35,32 @@ def chooseReading():
                   "\r1 - Plik txt \n"
                   "\r2 - Plik excel \n"
                   "\r3 - Konsola \n")
+        except TypeError:
+            print("")
+            print("Nie ma takiej opcji, wybierz ponownie: ")
+            print("Wybierz w jaki sposób chcesz dostarczyc punkty do programu \n"
+                  "\r1 - Plik txt \n"
+                  "\r2 - Plik excel \n"
+                  "\r3 - Konsola \n")
         else:
             break
 
 
 def excelRead():
+    global df
     print("Aby pobrac punkty z Excela współrzędne X proszę podać w pierwszej linii w każdej kolumnie odzielnie.\n"
           "Punkty Y proszę podać w kolejnej linii w każdej kolumnie odzielnie\n"
           "Jeżeli są to liczby zmiennoprzecinkowe proszę wstawić kropkę")
     root = Tk()
     root.attributes('-topmost', True)
     root.withdraw()
-    filename = askopenfilename()
-    print("Opening : " + str(filename))
-    df = pd.read_excel(filename, header=None)
+    try:
+        filename = askopenfilename()
+        print("Opening : " + str(filename))
+        df = pd.read_excel(filename, header=None)
+    except FileNotFoundError:
+        print("Nie znaleziono pliku: ")
+        printMenu()
     newArray = df.to_numpy()
     middleIndex = int(floor(len(newArray) / 2))
     x = newArray[:middleIndex]
@@ -64,9 +76,6 @@ def excelRead():
             menu(n)
         except ValueError:
             print("Nie ma takiej opcji, wybierz ponownie: ")
-        except IndexError as error:
-            print("Niepoprawnie wpisane dane, spróbuj ponownie: ")
-            printMenu()
         else:
             break
 
@@ -80,10 +89,13 @@ def txtRead():
     root.withdraw()
     filename = askopenfilename()
     print("Opening : " + str(filename))
-    with open(filename) as file:
-        lines = loadtxt(file, dtype=str, comments="#", delimiter=",", unpack=False)
-        print(lines)
-
+    try:
+        with open(filename) as file:
+            lines = loadtxt(file, dtype=str, comments="#", delimiter=",", unpack=False)
+            print(lines)
+    except FileNotFoundError:
+        print("Nie znaleziono pliku: ")
+        printMenu()
     newArray = []
     newArray = np.array(np.split(lines, floor(len(lines))))
     middleIndex = int(floor(len(newArray) / 2))
@@ -102,6 +114,9 @@ def txtRead():
             print("Nie ma takiej opcji, wybierz ponownie: ")
         except IndexError as error:
             print("Niepoprawnie wpisane dane, spróbuj ponownie: ")
+            printMenu()
+        except FileNotFoundError as error:
+            print("Klikniety przycisk anuluj, spróbuj ponownie: ")
             printMenu()
         else:
             break
