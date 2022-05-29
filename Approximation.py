@@ -14,9 +14,9 @@ from Errors import Errors
 class Approximation:
     @classmethod
     def approximationMethod(self, z, y):
+        plt.cla()
         # gauss method its normal distribution so it does not need deegre
         # of polynomial.
-        os.remove("line.jpg")
         xdata = np.asarray(z)
         ydata = np.asarray(y)
         plt.plot(xdata, ydata, 'o')

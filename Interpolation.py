@@ -13,7 +13,7 @@ from Errors import Errors
 class Interpolation:
     @classmethod
     def interpolationMethod(self, x, y):
-        os.remove("line.jpg")
+        plt.cla()
         plt.plot(x, y, 'o')
 
         #  Calculate the polynomial coefficients
